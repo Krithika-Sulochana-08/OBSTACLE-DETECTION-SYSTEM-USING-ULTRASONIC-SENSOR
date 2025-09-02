@@ -53,14 +53,43 @@ Step 7: Save Your Work
 
 
 ## Code:
+#define echoPin 2   // Echo pin connected to Arduino pin 2
+#define trigPin 3   // Trigger pin connected to Arduino pin 3
 
+long duration;   // Declare only once
+int distance;    // Declare only once
+
+void setup() {
+  pinMode(trigPin, OUTPUT);  // Set trigPin as output
+  pinMode(echoPin, INPUT);   // Set echoPin as input
+  Serial.begin(9600);        // Start serial communication
+}
+
+void loop() {
+  // Clear the trigPin condition
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+
+  // Set the trigPin HIGH (ACTIVE) for 10 microseconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+
+  // Calculating the distance
+  distance = duration * 0.034 / 2; // Speed of sound 0.034 cm/µs (divided by 2 for go and return)
+
+  // Displays the distance on the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+}
 
 ## Output:
- 
 
+https://github.com/user-attachments/assets/504e4068-8aec-433e-a0fe-5ca5a0eae73c
 
 ## Result
-
-
-Result:
 The simulation successfully measured the distance between the ultrasonic sensor  HC-SR04 and the object. The real-time distance values were accurately displayed on the serial monitor in centimeters.
